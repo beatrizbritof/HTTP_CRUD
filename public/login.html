@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- sweetalert -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        form {
+            width: 20vw;
+        }
+
+        form input {
+            width: 80%;
+        }
+
+        .swal2-popup {
+            background-color: rgb(223, 223, 223);
+        }
+
+        .swal2-title {
+            color: black;
+        }
+
+        button {
+            background-color: brown;
+            border: none;
+            padding: 8px;
+            width: 80px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Login</title>
+</head>
+
+<body>
+    <header id="header">
+        <a logo href="">Adopet</a>
+        <nav id="nav">
+            <button aria-label="Abrir Menu" id="btn-mobile" aria-haspopup="true" aria-controls="menu"
+                aria-expanded="false">Menu
+                <span id="hamburger"></span>
+            </button>
+            <ul id="menu" role="menu">
+                <li><a href="login.html">LOGIN</a></li>
+                <li><a href="cadastro.html">CADASTRO</a></li>
+             </ul>
+        </nav>
+    </header>
+    <center>
+        <div class="total">
+            <h2>Faça login para ver as informações</h2>
+            <form action="" id="formulario_login" onsubmit="event.preventDefault();">
+                <label for="">Nome: </label><br>
+                <input type="text" id="nome" minlength="1" required>
+                <br>
+                <label for="">ID: </label><br>
+                <input type="number" id="id"><br><br>
+                <button onclick="login()">Logar</button>
+            </form>
+        </div>
+    </center>
+    <script>
+        function login() {
+            const nome = document.getElementById('nome').value;
+            const id = document.getElementById('id').value;
+            console.log('foi')
+
+            fetch("cadastro").then(resposta => resposta.json()).then(encontra => {
+                const cadastro = encontra.find(p => p.nome === nome && p.id == id);
+
+                if (cadastro) {
+                    window.location.href = 'exibir.html'
+                } else{
+                    //alert("nao foi")
+                  Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Seu login está incorreto! Reensira suas informações',
+                        footer: '<a href="cadastro.html">Não tem conta? Cadastre-se</a>'
+                    })
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
